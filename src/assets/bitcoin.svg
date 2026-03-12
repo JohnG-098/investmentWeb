@@ -1,0 +1,50 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gold gradient -->
+    <radialGradient id="goldGradient" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#fff7b0"/>
+      <stop offset="40%" stop-color="#f7c948"/>
+      <stop offset="75%" stop-color="#d4a017"/>
+      <stop offset="100%" stop-color="#8a6a00"/>
+    </radialGradient>
+
+    <!-- Coin edge gradient -->
+    <linearGradient id="edgeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe27a"/>
+      <stop offset="50%" stop-color="#c99700"/>
+      <stop offset="100%" stop-color="#fff2a6"/>
+    </linearGradient>
+
+    <!-- Glow -->
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Coin outer ring -->
+  <circle cx="128" cy="128" r="110" fill="url(#edgeGradient)" />
+
+  <!-- Inner coin -->
+  <circle cx="128" cy="128" r="95" fill="url(#goldGradient)" filter="url(#softGlow)" />
+
+  <!-- Decorative inner ring -->
+  <circle cx="128" cy="128" r="80" fill="none" stroke="#b88900" stroke-width="4" opacity="0.7"/>
+
+  <!-- Bitcoin symbol -->
+  <text x="128" y="155"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="90"
+        font-weight="bold"
+        text-anchor="middle"
+        fill="#7a5c00">
+    ₿
+  </text>
+
+  <!-- Vertical strokes for Bitcoin -->
+  <rect x="116" y="70" width="6" height="120" fill="#7a5c00"/>
+  <rect x="134" y="70" width="6" height="120" fill="#7a5c00"/>
+</svg>
