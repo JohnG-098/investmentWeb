@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@theme {
+  /* Use the --background-image-* prefix to create a new utility */
+  --background-image-golden-blue: url('/src/assets/img1.png');
+  --background-image-golden-blue1: url('/src/assets/img2.png');
+}
