@@ -4,7 +4,7 @@ import Button from "./Button";
 const Hero = () => {
   return (
     <div
-      className="bg-[linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.2)),url('/src/assets/img1.png')]
+      className="bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('/src/assets/img1.png')]
       bg-cover bg-center min-h-180 text-amber-200
       flex items-center justify-center md:justify-end
       px-6 md:pr-16 pt-8"
