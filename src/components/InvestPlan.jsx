@@ -3,17 +3,28 @@ import Card from "./Card";
 
 const InvestPlan = () => {
   return (
-    <div
-      className=" bg-[linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('/src/assets/galaxy.png')]
-      bg-cover bg-center text-amber-200
-      min-h-[150vh]"
+    <section
+      className="
+      bg-[linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('/src/assets/galaxy.png')]
+      bg-cover bg-center
+      text-amber-200
+      py-24
+      "
     >
-      <div className="flex flex-row gap-5 justify-center font-stretch-150%% font pt-40 pb-20">
-        <h2 className="text-5xl font-bold">Investment</h2>
-        <h2 className="text-5xl font-bold text-amber-50">Plans</h2>
+      {/* Title */}
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-5 justify-center items-center text-center mb-10 px-4">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">
+          Investment
+        </h2>
+
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-amber-50">
+          Plans
+        </h2>
       </div>
-      <div className="flex flex-row justify-center  text-amber-100 ">
-        <div className="flex flex-row justify-center font-semibold text-amber-100 w-150 text-2xl">
+
+      {/* Description */}
+      <div className="flex justify-center px-6 mb-16">
+        <div className="max-w-2xl text-center font-semibold text-amber-100 text-base sm:text-lg md:text-xl">
           <p>
             Don't fly blind with your capital. Research your options and choose
             the investment path that fits you best.
@@ -21,16 +32,16 @@ const InvestPlan = () => {
         </div>
       </div>
 
+      {/* Cards */}
       <div
         className="
-      
-      flex flex-col md:flex-row
-      gap-6
-      items-center
-      justify-center
-      px-6 md:px-16
-      py-10
-      "
+        flex flex-col md:flex-row
+        flex-wrap
+        gap-8
+        items-center
+        justify-center
+        px-6 md:px-16
+        "
       >
         <Card
           title="SHORT TERM"
@@ -53,6 +64,7 @@ const InvestPlan = () => {
           max="2,500"
           buttonText="Invest Now"
         />
+
         <Card
           title="PRO PLAN"
           returnRate="25.00"
@@ -63,6 +75,7 @@ const InvestPlan = () => {
           max="5,000"
           buttonText="Invest Now"
         />
+
         <Card
           title="Deriv Bot"
           returnRate="50.00"
@@ -74,7 +87,7 @@ const InvestPlan = () => {
           buttonText="Invest Now"
         />
       </div>
-    </div>
+    </section>
   );
 };
 
