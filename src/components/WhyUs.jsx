@@ -4,7 +4,7 @@ const WhyUs = () => {
   return (
     <section
       className="
-      bg-[linear-gradient(rgba(0,0,0,0.9),rgba(0,0,0,0.9)),url('/src/assets/coins.png')]
+      bg-[linear-gradient(rgba(0,0,0,0.85),rgba(0,0,0,0.85)),url('/src/assets/coins.png')]
       bg-cover bg-center
       text-amber-200
       min-h-screen
