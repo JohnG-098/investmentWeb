@@ -1,7 +1,10 @@
 import React from "react";
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <div
       className="bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('/src/assets/img1.png')]
@@ -18,8 +21,11 @@ const Hero = () => {
           insights, we’ve removed the complexity from crypto, giving you the
           tools to build a diversified portfolio with total confidence.
         </div>
+
         <div className="mt-10">
-          <Button>Sign Up</Button>
+          <Button onClick={() => navigate("/register")}>
+            Sign Up
+          </Button>
         </div>
       </div>
     </div>

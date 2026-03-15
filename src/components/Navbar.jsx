@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Button from "./Button";
+import DropDown from "./DropDown";
+import { AiOutlineUnorderedList } from "react-icons/ai";
+import { FaCircleUser } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+ 
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,7 +35,7 @@ const Navbar = () => {
 
       {/* Right Side */}
       <div className="flex flex-row items-center gap-10">
-        {/* Navigation Links */}
+        {/* Desktop Navigation */}
         <div className="hidden md:flex flex-row gap-8">
           <p className="cursor-pointer hover:text-amber-400 transition">Home</p>
           <p className="cursor-pointer hover:text-amber-400 transition">
@@ -41,11 +48,21 @@ const Navbar = () => {
           </p>
         </div>
 
-        {/* Login */}
-        <div className="flex items-center cursor-pointer hover:text-amber-400 transition">
-          <span>Login icon</span>
+        {/* Mobile Icons */}
+        <div className="flex items-center cursor-pointer gap-3 transition text-2xl">
+          <FaCircleUser
+            className="hover:text-amber-400"
+            onClick={() => navigate("/login")}
+          />
+          <AiOutlineUnorderedList
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="hover:text-amber-400 md:hidden"
+          />
         </div>
       </div>
+
+      {/* Dropdown Menu */}
+      <DropDown open={menuOpen} setMenuOpen={setMenuOpen} />
     </div>
   );
 };
