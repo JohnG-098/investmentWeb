@@ -73,9 +73,9 @@ const Register = () => {
         {/* Login Link */}
         <p className="text-gray-400 text-sm text-center mt-6">
           Already have an account?{" "}
-          <Link className="text-amber-400 cursor-pointer hover:underline" onClick={()=>navigate("/login")}>
+          <div className="text-amber-400 cursor-pointer hover:underline" onClick={()=>navigate("/login")}>
             Login
-          </Link>
+          </div>
         </p>
       </div>
     </div>

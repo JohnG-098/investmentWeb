@@ -64,12 +64,12 @@ const Login = () => {
         {/* Register link */}
         <p className="text-gray-400 text-sm text-center mt-6">
           Don’t have an account?{" "}
-          <Link
+          <div
             className="text-amber-400 cursor-pointer hover:underline"
             onClick={() => navigate("/register")}
           >
             Register
-          </Link>
+          </div>
         </p>
       </div>
     </div>
