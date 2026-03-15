@@ -4,6 +4,9 @@ import DropDown from "./DropDown";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { FaCircleUser } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { BiLogoBitcoin } from "react-icons/bi";
+import { BiLogoMediumOld } from "react-icons/bi";
+//<BiLogoBitcoin />
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -31,7 +34,7 @@ const Navbar = () => {
       ${scrolled ? "bg-gray-900 shadow-lg" : "bg-black/20 backdrop-blur-md"}`}
     >
       {/* Logo */}
-      <div className="font-bold text-xl cursor-pointer">LOGO</div>
+      <div className="font-bold text-6xl cursor-pointer flex flex-row" onClick={()=>navigate("/")}> <BiLogoMediumOld /></div>
 
       {/* Right Side */}
       <div className="flex flex-row items-center gap-10">
