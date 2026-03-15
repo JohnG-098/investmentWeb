@@ -7,12 +7,12 @@ import WhyUs from '../components/WhyUs'
 
 const Home = () => {
   return (
-    <MainLayout>
+    <>
       <Hero/>
       <About/>
       <InvestPlan/>
       <WhyUs/>
-    </MainLayout>
+    </>
   )
 }
 
