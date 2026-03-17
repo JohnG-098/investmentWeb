@@ -3,7 +3,7 @@ import Button from "./Button";
 import DropDown from "./DropDown";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { FaCircleUser } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiLogoBitcoin } from "react-icons/bi";
 import { BiLogoMediumOld } from "react-icons/bi";
 //<BiLogoBitcoin />
@@ -40,15 +40,15 @@ const Navbar = () => {
       <div className="flex flex-row items-center gap-10">
         {/* Desktop Navigation */}
         <div className="hidden md:flex flex-row gap-8">
-          <p className="cursor-pointer hover:text-amber-400 transition">Home</p>
-          <p className="cursor-pointer hover:text-amber-400 transition">
+          <Link className="cursor-pointer hover:text-amber-400 transition" to="/">Home</Link>
+          <Link className="cursor-pointer hover:text-amber-400 transition" to="about">
             About Us
-          </p>
-          <p className="cursor-pointer hover:text-amber-400 transition">Blog</p>
-          <p className="cursor-pointer hover:text-amber-400 transition">Plan</p>
-          <p className="cursor-pointer hover:text-amber-400 transition">
+          </Link>
+          <Link className="cursor-pointer hover:text-amber-400 transition" to="/blog">Blog</Link>
+          <Link className="cursor-pointer hover:text-amber-400 transition" to="/plan">Plan</Link>
+          <Link className="cursor-pointer hover:text-amber-400 transition" to='/contact'>
             Contact Us
-          </p>
+          </Link>
         </div>
 
         {/* Mobile Icons */}

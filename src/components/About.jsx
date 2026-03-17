@@ -19,7 +19,7 @@ const About = () => {
           About Us
         </h2>
 
-        <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold leading-relaxed">
+        <p className="text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed">
           Our global firm leverages professional expertise in market and crypto
           trading to build wealth for our clients. We bridge the gap between
           investors and trustees with a seamless, high-service platform designed

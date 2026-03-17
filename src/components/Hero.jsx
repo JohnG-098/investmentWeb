@@ -13,7 +13,7 @@ const Hero = () => {
       px-6 md:pr-16 pt-8"
     >
       <div className="max-w-2xl text-center md:text-right">
-        <div className="text-base sm:text-lg md:text-2xl font-semibold leading-relaxed">
+        <div className="text-base sm:text-lg md:text-2xl leading-relaxed">
           The future of finance is digital, and it’s already here. Our platform
           bridges the gap between traditional investing and the world of
           blockchain, offering you a secure, streamlined way to grow your

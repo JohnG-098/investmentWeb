@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const DropDown = ({ open, setMenuOpen }) => {
   const dropdownRef = useRef();
@@ -17,6 +18,10 @@ const DropDown = ({ open, setMenuOpen }) => {
     };
   }, [setMenuOpen]);
 
+  const handleClose = () => {
+    setMenuOpen(false);
+  };
+
   return (
     <div
       ref={dropdownRef}
@@ -24,15 +29,25 @@ const DropDown = ({ open, setMenuOpen }) => {
       ${open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10 pointer-events-none"}`}
     >
       <div className="flex flex-col gap-4">
-        <p className="cursor-pointer hover:text-amber-400 transition">Home</p>
-        <p className="cursor-pointer hover:text-amber-400 transition">
+        <Link onClick={handleClose} className="hover:text-amber-400 transition" to="/">
+          Home
+        </Link>
+
+        <Link onClick={handleClose} className="hover:text-amber-400 transition" to="/about">
           About Us
-        </p>
-        <p className="cursor-pointer hover:text-amber-400 transition">Blog</p>
-        <p className="cursor-pointer hover:text-amber-400 transition">Plan</p>
-        <p className="cursor-pointer hover:text-amber-400 transition">
+        </Link>
+
+        <Link onClick={handleClose} className="hover:text-amber-400 transition" to="/blog">
+          Blog
+        </Link>
+
+        <Link onClick={handleClose} className="hover:text-amber-400 transition" to="/plan">
+          Plan
+        </Link>
+
+        <Link onClick={handleClose} className="hover:text-amber-400 transition" to="/contact">
           Contact Us
-        </p>
+        </Link>
       </div>
     </div>
   );
