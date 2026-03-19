@@ -1,6 +1,7 @@
 import React from "react";
 import cardSvg from "../assets/svg/cardsvg.svg";
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 const Card = ({
   title,
@@ -10,18 +11,27 @@ const Card = ({
   total,
   min,
   max,
-  buttonText,
 }) => {
+  const navigate = useNavigate();
+
+  const handleInvest = () => {
+    navigate("/invest", {
+      state: {
+        title,
+        returnRate,
+        frequency,
+        duration,
+        total,
+        min: Number(min.toString().replace(/,/g, "")),
+        max: Number(max.toString().replace(/,/g, "")),
+      },
+    });
+  };
+
   return (
     <div className="relative w-[320px] h-[420px]">
-      {/* Background SVG */}
-      <img
-        src={cardSvg}
-        alt="card"
-        className="absolute inset-0 w-full h-full"
-      />
+      <img src={cardSvg} alt="card" className="absolute inset-0 w-full h-full" />
 
-      {/* Content */}
       <div className="absolute inset-0 flex flex-col items-center justify-between py-8 px-6 text-center">
         <h2 className="text-2xl font-semibold text-yellow-400">{title}</h2>
 
@@ -36,7 +46,7 @@ const Card = ({
           ${min} - ${max}
         </div>
 
-        <Button>Invest</Button>
+        <Button onClick={handleInvest}>Invest</Button>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import ContactUs from "./pages/ContactUs";
 import About from "./components/About";
 import WhyUs from "./components/WhyUs";
 import InvestPlan from "./components/InvestPlan";
+import Invest from "./pages/Invest";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<WhyUs />} />
         <Route path="/plan" element={<InvestPlan />} />
+        <Route path="/invest" element={<Invest />} />
       </Routes>
     </MainLayout>
     </BrowserRouter>
