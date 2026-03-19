@@ -90,7 +90,7 @@ const Invest = () => {
           ${
             isDisabled
               ? "bg-gray-600 cursor-not-allowed"
-              : "bg-amber-400 text-black hover:bg-amber-500"
+              : "bg-amber-400 text-black hover:bg-amber-500 cursor-pointer"
           }`}
         >
           Calculate Returns (Optional)
@@ -117,7 +117,7 @@ const Invest = () => {
           ${
             isDisabled
               ? "bg-gray-600 cursor-not-allowed"
-              : "bg-green-500 text-black hover:bg-green-600"
+              : "bg-green-500 text-black hover:bg-green-600 cursor-pointer"
           }`}
         >
           Invest Now
