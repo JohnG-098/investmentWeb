@@ -1,8 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import SummaryApi from "../common";
 
 const Register = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    confirmPassword: "",
+  });
+
   const navigate = useNavigate();
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (data.password !== data.confirmPassword) {
+      toast.error("password and confirm password did not match");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const dataResponse = await fetch(SummaryApi.SignUp.url, {
+        method: SummaryApi.SignUp.method,
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const dataApi = await dataResponse.json();
+
+      if (dataApi.success) {
+        toast.success(dataApi.message);
+        navigate("/login");
+      } else {
+        toast.error(dataApi.message);
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div
       className="min-h-screen pt-20 flex items-center justify-center px-4
@@ -24,38 +82,62 @@ const Register = () => {
         </p>
 
         {/* Form */}
-        <form className="flex flex-col gap-5">
-          {/* Username */}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <input
             type="text"
-            placeholder="Username"
+            placeholder="First Name*"
+            name="firstName"
+            onChange={handleOnChange}
+            value={data.firstName}
+            required
             className="bg-black/50 border border-gray-700 rounded-lg px-4 py-3
             text-white placeholder-gray-400 focus:outline-none
             focus:border-amber-400 transition"
           />
 
-          {/* Email */}
+          <input
+            type="text"
+            placeholder="Last Name*"
+            required
+            name="lastName"
+            onChange={handleOnChange}
+            value={data.lastName}
+            className="bg-black/50 border border-gray-700 rounded-lg px-4 py-3
+            text-white placeholder-gray-400 focus:outline-none
+            focus:border-amber-400 transition"
+          />
+
           <input
             type="email"
-            placeholder="Email Address"
+            placeholder="Email Address*"
+            required
+            name="email"
+            onChange={handleOnChange}
+            value={data.email}
             className="bg-black/50 border border-gray-700 rounded-lg px-4 py-3
             text-white placeholder-gray-400 focus:outline-none
             focus:border-amber-400 transition"
           />
 
-          {/* Password */}
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Password*"
+            required
+            name="password"
+            onChange={handleOnChange}
+            value={data.password}
             className="bg-black/50 border border-gray-700 rounded-lg px-4 py-3
             text-white placeholder-gray-400 focus:outline-none
             focus:border-amber-400 transition"
           />
 
-          {/* Confirm Password */}
           <input
             type="password"
-            placeholder="Confirm Password"
+            required
+            name="confirmPassword"
+            onChange={handleOnChange}
+            value={data.confirmPassword}
+            placeholder="Confirm Password*"
             className="bg-black/50 border border-gray-700 rounded-lg px-4 py-3
             text-white placeholder-gray-400 focus:outline-none
             focus:border-amber-400 transition"
@@ -63,17 +145,31 @@ const Register = () => {
 
           {/* Register Button */}
           <button
-            className="mt-2 bg-amber-400 text-black font-semibold py-3 rounded-lg
-            hover:bg-amber-500 transition cursor-pointer"
+            type="submit"
+            disabled={loading}
+            className={`mt-2 flex items-center justify-center gap-2 
+            bg-amber-400 text-black font-semibold py-3 rounded-lg
+            transition cursor-pointer
+            ${loading ? "opacity-70 animate-pulse" : "hover:bg-amber-500"}`}
           >
-            Register
+            {loading ? (
+              <>
+                <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                Processing...
+              </>
+            ) : (
+              "Register"
+            )}
           </button>
         </form>
 
         {/* Login Link */}
         <p className="text-gray-400 text-sm text-center mt-6">
           Already have an account?{" "}
-          <Link className="text-amber-400 cursor-pointer hover:underline" to="/login">
+          <Link
+            className="text-amber-400 cursor-pointer hover:underline"
+            to="/login"
+          >
             Login
           </Link>
         </p>

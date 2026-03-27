@@ -8,11 +8,15 @@ import About from "./components/About";
 import WhyUs from "./components/WhyUs";
 import InvestPlan from "./components/InvestPlan";
 import Invest from "./pages/Invest";
+import { Toaster } from "react-hot-toast";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
+    
     <BrowserRouter>
     <MainLayout>
+      <Toaster position="top-right" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
@@ -22,6 +26,7 @@ function App() {
         <Route path="/blog" element={<WhyUs />} />
         <Route path="/plan" element={<InvestPlan />} />
         <Route path="/invest" element={<Invest />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </MainLayout>
     </BrowserRouter>
