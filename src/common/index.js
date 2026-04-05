@@ -1,6 +1,6 @@
 
 
-const backendDomain = "https://backend-theta-six-55.vercel.app/" //"http://localhost:8080";
+const backendDomain = "https://backend-theta-six-55.vercel.app" //"http://localhost:8080";
 
 const SummaryApi = {
   SignUp: {
