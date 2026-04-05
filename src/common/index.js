@@ -1,58 +1,55 @@
-
-
-const backendDomain = "https://backend-theta-six-55.vercel.app" //"http://localhost:8080";
+// Remove this line entirely
+// const backendDomain = "https://backend-theta-six-55.vercel.app"
 
 const SummaryApi = {
   SignUp: {
-    url: `${backendDomain}/api/user/add`,
+    url: `/api/user/add`,
     method: "post",
   },
   signIn: {
-    url: `${backendDomain}/api/user/login`,
+    url: `/api/user/login`,
     method: "post",
   },
-  current_user : {
-        url : `${backendDomain}/api/user/details`,
-        method : "get"
-    },
+  current_user: {
+    url: `/api/user/details`,
+    method: "get",
+  },
   Invest: {
-    url: `${backendDomain}/api/user/invest`,
+    url: `/api/user/invest`,
     method: "post",
   },
   verifyEmail: {
-    url: `${backendDomain}/api/user/verify`,
+    url: `/api/user/verify`,
     method: "post",
   },
   verifyCode: {
-    url: `${backendDomain}/api/user/verify-code`,
+    url: `/api/user/verify-code`,
     method: "post",
   },
   fetchInvestment: {
-    url: `${backendDomain}/api/user/investments`,
+    url: `/api/user/investments`,
     method: "post",
   },
   investMore: {
-    url: `${backendDomain}/api/user/invest-more`,
+    url: `/api/user/invest-more`,
     method: "post",
   },
   getTransactions: {
-    url: `${backendDomain}/api/user/transactions`,
+    url: `/api/user/transactions`,
     method: "post",
   },
   getAllUsers: {
-    url: `${backendDomain}/api/user/all-users`,
+    url: `/api/user/all-users`,
     method: "get",
   },
   verifyKyc: {
-    url: `${backendDomain}/api/user/verify-kyc`,
+    url: `/api/user/verify-kyc`,
     method: "post",
   },
   logout: {
-    url: `${backendDomain}/api/user/logout`,
+    url: `/api/user/logout`,
     method: "post",
   },
-
-
 };
 
 export default SummaryApi;
