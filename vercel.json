@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://backend-theta-six-55.vercel.app/api/:path*"
+      "destination": "https://investmentbackend-7nzl.onrender.com/api/:path*"
     },
     {
       "source": "/(.*)",
