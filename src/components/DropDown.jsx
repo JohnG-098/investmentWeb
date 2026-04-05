@@ -1,8 +1,15 @@
-import React, { useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Context from "../context";
+import SummaryApi from "../common";
+import { toast } from "react-hot-toast";
 
 const DropDown = ({ open, setMenuOpen }) => {
   const dropdownRef = useRef();
+  const navigate = useNavigate();
+
+  // ✅ added setUser for instant UI update
+  const { user, setUser } = useContext(Context);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -12,14 +19,36 @@ const DropDown = ({ open, setMenuOpen }) => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [setMenuOpen]);
 
-  const handleClose = () => {
-    setMenuOpen(false);
+  const close = () => setMenuOpen(false);
+
+  // ✅ LOGOUT HANDLER ADDED
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(SummaryApi.logout.url, {
+        method: SummaryApi.logout.method,
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success("Logged out successfully");
+
+        // ✅ instant UI update
+        setUser(null);
+
+        close();
+        navigate("/login", { replace: true });
+      } else {
+        toast.error(data.message || "Logout failed");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -29,25 +58,44 @@ const DropDown = ({ open, setMenuOpen }) => {
       ${open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10 pointer-events-none"}`}
     >
       <div className="flex flex-col gap-4">
-        <Link onClick={handleClose} className="hover:text-amber-400 transition" to="/">
-          Home
-        </Link>
+        <Link onClick={close} to="/">Home</Link>
+        <Link onClick={close} to="/about">About Us</Link>
+        <Link onClick={close} to="/blog">Blog</Link>
+        <Link onClick={close} to="/plan">Plan</Link>
+        <Link onClick={close} to="/contact">Contact Us</Link>
 
-        <Link onClick={handleClose} className="hover:text-amber-400 transition" to="/about">
-          About Us
-        </Link>
+        <div className="border-t border-amber-500/20 my-2" />
 
-        <Link onClick={handleClose} className="hover:text-amber-400 transition" to="/blog">
-          Blog
-        </Link>
+        {user && (
+          <div
+            onClick={() => {
+              navigate("/dashboard");
+              close();
+            }}
+            className="cursor-pointer hover:text-amber-400"
+          >
+            My Wallet
+          </div>
+        )}
 
-        <Link onClick={handleClose} className="hover:text-amber-400 transition" to="/plan">
-          Plan
-        </Link>
-
-        <Link onClick={handleClose} className="hover:text-amber-400 transition" to="/contact">
-          Contact Us
-        </Link>
+        {user ? (
+          <div
+            onClick={handleLogout}
+            className="text-red-400 cursor-pointer"
+          >
+            Logout
+          </div>
+        ) : (
+          <div
+            onClick={() => {
+              navigate("/login");
+              close();
+            }}
+            className="cursor-pointer hover:text-amber-400"
+          >
+            Login
+          </div>
+        )}
       </div>
     </div>
   );

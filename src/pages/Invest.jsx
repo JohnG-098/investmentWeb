@@ -1,19 +1,20 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import Context from "../context";
+import SummaryApi from "../common";
+import { toast } from "react-hot-toast";
 
 const Invest = () => {
   const { state } = useLocation();
+  const { user } = useContext(Context);
+  const navigate = useNavigate();
 
   const [amount, setAmount] = useState("");
   const [error, setError] = useState("");
   const [result, setResult] = useState(null);
 
   if (!state) {
-    return (
-      <div className="pt-20 text-center text-white">
-        No plan selected
-      </div>
-    );
+    return <div className="pt-20 text-center text-white">No plan selected</div>;
   }
 
   const { title, returnRate, duration, min, max } = state;
@@ -45,8 +46,44 @@ const Invest = () => {
     setResult(total.toFixed(2));
   };
 
-  const handleInvest = () => {
-    alert(`Investing $${amount} in ${title}`);
+  const handleInvest = async () => {
+    try {
+      if (!user?._id || !user?.email) {
+        alert("User not logged in");
+        navigate("/login");
+        return;
+      }
+
+      if (!amount || error) {
+        toast.error("Enter a valid amount");
+        return;
+      }
+
+      const response = await fetch(SummaryApi.Invest.url, {
+        method: SummaryApi.Invest.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user?.email,
+          userId: user?._id,
+          planName: title,
+          amountInvested: amount,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success("Investment successful!");
+        navigate("/dashboard");
+      } else {
+        toast.error(data.message || "Investment failed");
+      }
+    } catch (err) {
+      console.error("Investment Error:", err);
+      toast.error("Something went wrong");
+    }
   };
 
   const isDisabled = !!error || !amount;
@@ -58,7 +95,6 @@ const Invest = () => {
       bg-cover bg-center"
     >
       <div className="w-full max-w-lg bg-black/40 backdrop-blur-lg border border-amber-400/20 rounded-2xl shadow-2xl p-8">
-
         {/* Title */}
         <h2 className="text-3xl text-center text-amber-400 font-bold mb-2">
           {title}
@@ -78,11 +114,9 @@ const Invest = () => {
         />
 
         {/* Error */}
-        {error && (
-          <p className="text-red-500 mt-2 text-sm">{error}</p>
-        )}
+        {error && <p className="text-red-500 mt-2 text-sm">{error}</p>}
 
-        {/* Calculate Button (Optional) */}
+        {/* Calculate Button */}
         <button
           onClick={calculateReturn}
           disabled={isDisabled}
@@ -100,9 +134,7 @@ const Invest = () => {
         {result && (
           <div className="mt-6 text-center">
             <p className="text-gray-400">Estimated Return</p>
-            <h3 className="text-2xl text-green-400 font-bold">
-              ${result}
-            </h3>
+            <h3 className="text-2xl text-green-400 font-bold">${result}</h3>
             <p className="text-sm text-gray-500 mt-2">
               Based on {returnRate}% plan
             </p>
@@ -122,7 +154,6 @@ const Invest = () => {
         >
           Invest Now
         </button>
-
       </div>
     </div>
   );
