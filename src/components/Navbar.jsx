@@ -15,8 +15,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ✅ IMPORTANT: added setUser
-  const { user, setUser } = useContext(Context);
+  // ✅ keep only user (setUser NOT required anymore for sync safety)
+  const { user, setUser, fetchUserDetails } = useContext(Context);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,7 +29,9 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  // ✅ LOGOUT FUNCTION (FIXED)
+  // =========================
+  // ✅ FIXED LOGOUT
+  // =========================
   const handleLogout = async () => {
     try {
       const response = await fetch(SummaryApi.logout.url, {
@@ -42,8 +44,13 @@ const Navbar = () => {
       if (data.success) {
         toast.success("Logged out successfully");
 
-        // ✅ THIS IS WHAT FIXES YOUR UI UPDATE ISSUE
+        // ✅ instantly clear UI
         setUser(null);
+
+        // optional: re-sync backend state
+        if (fetchUserDetails) {
+          await fetchUserDetails();
+        }
 
         navigate("/login", { replace: true });
       } else {
@@ -70,6 +77,7 @@ const Navbar = () => {
 
       {/* Right Side */}
       <div className="flex flex-row items-center gap-10">
+
         {/* Desktop Navigation */}
         <div className="hidden md:flex flex-row gap-8 items-center">
           <Link

@@ -1,3 +1,4 @@
+// Context.jsx
 import { createContext, useState, useEffect } from "react";
 import SummaryApi from "../common";
 
@@ -7,7 +8,9 @@ export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Fetch logged-in user
+  // ✅ prevents navbar flicker before auth loads
+  const [authReady, setAuthReady] = useState(false);
+
   const fetchUserDetails = async () => {
     try {
       const res = await fetch(SummaryApi.current_user.url, {
@@ -16,11 +19,9 @@ export const ContextProvider = ({ children }) => {
       });
 
       const data = await res.json();
-      //console.log("USER DATA FROM BACKEND:", data);
 
       if (data.success) {
-        setUser(data.data); 
-        //console.log("SET USER:", data.data);
+        setUser(data.data);
       } else {
         setUser(null);
       }
@@ -29,10 +30,10 @@ export const ContextProvider = ({ children }) => {
       setUser(null);
     } finally {
       setLoading(false);
+      setAuthReady(true);
     }
   };
 
-  // Run on app start (important!)
   useEffect(() => {
     fetchUserDetails();
   }, []);
@@ -44,6 +45,7 @@ export const ContextProvider = ({ children }) => {
         setUser,
         fetchUserDetails,
         loading,
+        authReady,
       }}
     >
       {children}

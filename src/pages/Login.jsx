@@ -1,3 +1,4 @@
+// Login.jsx
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SummaryApi from "../common";
@@ -12,10 +13,7 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
-
-  // ✅ SAFE CONTEXT ACCESS
-  const context = useContext(Context);
-  const fetchUserDetails = context?.fetchUserDetails;
+  const { fetchUserDetails } = useContext(Context);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -44,12 +42,12 @@ const Login = () => {
       if (dataApi.success) {
         toast.success(dataApi.message);
 
-        // ✅ fetch user FIRST
-        if (fetchUserDetails) {
-          await fetchUserDetails();
-        }
+        // ✅ IMPORTANT FIX: sync user before navigation
+        await fetchUserDetails();
 
-        // ✅ then navigate
+        // ensure state commits before route change
+        await new Promise(requestAnimationFrame);
+
         navigate("/dashboard");
       } else {
         toast.error(dataApi.message);
@@ -92,7 +90,6 @@ const Login = () => {
             focus:border-amber-400 transition"
           />
 
-          {/* ✅ PASSWORD WITH TOGGLE */}
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
