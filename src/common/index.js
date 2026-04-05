@@ -19,7 +19,7 @@ const SummaryApi = {
     method: "post",
   },
   verifyEmail: {
-    url: `https://investmentbackend-7nzl.onrender.com/api/user/verify`,
+    url: `/api/user/verify`,
     method: "post",
   },
   verifyCode: {

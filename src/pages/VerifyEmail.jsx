@@ -116,6 +116,9 @@ const VerifyEmail = () => {
         <p className="text-center text-gray-400 text-sm mb-8">
           Enter the 6-digit code sent to your email
         </p>
+        <p className="text-center text-gray-400 text-sm mb-8">
+          if you cannot find the code check your spam folder
+        </p>
 
         {/* Form */}
         <form onSubmit={handleVerify} className="flex flex-col gap-6">
