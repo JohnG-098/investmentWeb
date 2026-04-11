@@ -2,23 +2,33 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Context from "../context";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedAdminRoute = ({ children }) => {
   const { user, authReady } = useContext(Context);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 🔥 ONLY redirect after auth check is complete
-    if (authReady && user === null) {
+    if (!authReady) return;
+
+    if (user === null) {
       navigate("/login");
+      return;
     }
+
+    if (user?.role !== "admin") {
+      navigate("/not-found");
+    }
+
   }, [user, authReady, navigate]);
 
-  // 🔥 wait until auth is fully checked
   if (!authReady || user === undefined) {
     return <div>Loading...</div>;
+  }
+
+  if (user?.role !== "admin") {
+    return null;
   }
 
   return children;
 };
 
-export default ProtectedRoute;
+export default ProtectedAdminRoute;

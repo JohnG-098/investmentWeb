@@ -1,34 +1,44 @@
-<svg width="320" height="80" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="360" height="110" viewBox="0 0 360 110" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="grad1" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#F59E0B"/>
       <stop offset="100%" stop-color="#FCD34D"/>
     </linearGradient>
-    <linearGradient id="textGrad" x1="0" y1="0" x2="200" y2="0">
+
+    <linearGradient id="textGrad" x1="0" y1="0" x2="260" y2="0">
       <stop offset="0%" stop-color="#FCD34D"/>
       <stop offset="100%" stop-color="#F59E0B"/>
     </linearGradient>
   </defs>
 
-  <!-- Icon (Abstract Blockchain Cube) -->
-  <g transform="translate(10,10)">
-    <rect x="0" y="0" width="50" height="50" rx="12" fill="#0A0A0A" stroke="url(#grad1)" stroke-width="2"/>
+  <!-- 🔶 Bigger Icon -->
+  <g transform="translate(10,15)">
+    <rect x="0" y="0" width="70" height="70" rx="16" fill="#0A0A0A" stroke="url(#grad1)" stroke-width="2.5"/>
     
-    <!-- Inner chain blocks -->
-    <rect x="12" y="12" width="10" height="10" rx="3" fill="url(#grad1)"/>
-    <rect x="28" y="12" width="10" height="10" rx="3" fill="url(#grad1)"/>
-    <rect x="12" y="28" width="10" height="10" rx="3" fill="url(#grad1)"/>
-    <rect x="28" y="28" width="10" height="10" rx="3" fill="url(#grad1)"/>
+    <!-- Inner blocks -->
+    <rect x="16" y="16" width="14" height="14" rx="4" fill="url(#grad1)"/>
+    <rect x="40" y="16" width="14" height="14" rx="4" fill="url(#grad1)"/>
+    <rect x="16" y="40" width="14" height="14" rx="4" fill="url(#grad1)"/>
+    <rect x="40" y="40" width="14" height="14" rx="4" fill="url(#grad1)"/>
 
     <!-- Connecting lines -->
-    <line x1="17" y1="17" x2="33" y2="17" stroke="#FCD34D" stroke-width="1.5"/>
-    <line x1="17" y1="33" x2="33" y2="33" stroke="#FCD34D" stroke-width="1.5"/>
-    <line x1="17" y1="17" x2="17" y2="33" stroke="#FCD34D" stroke-width="1.5"/>
-    <line x1="33" y1="17" x2="33" y2="33" stroke="#FCD34D" stroke-width="1.5"/>
+    <line x1="23" y1="23" x2="47" y2="23" stroke="#FCD34D" stroke-width="2"/>
+    <line x1="23" y1="47" x2="47" y2="47" stroke="#FCD34D" stroke-width="2"/>
+    <line x1="23" y1="23" x2="23" y2="47" stroke="#FCD34D" stroke-width="2"/>
+    <line x1="47" y1="23" x2="47" y2="47" stroke="#FCD34D" stroke-width="2"/>
   </g>
 
-  <!-- Text -->
-  <text x="80" y="50" font-family="Poppins, Arial, sans-serif" font-size="28" font-weight="600" fill="url(#textGrad)">
-    Blockvest
+  <!-- 🔤 Text -->
+  <text x="95" y="65" font-family="Poppins, Arial, sans-serif" font-size="52" font-weight="600" fill="url(#textGrad)">
+    COINBIT
   </text>
+
+  <!-- 🌊 Curved underline -->
+  <path
+    d="M95 78 Q190 105 330 78"
+    stroke="url(#textGrad)"
+    stroke-width="3"
+    fill="none"
+    stroke-linecap="round"
+  />
 </svg>

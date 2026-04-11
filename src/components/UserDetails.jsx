@@ -13,7 +13,6 @@ const UserDetails = ({
   image,
   secondImage,
 }) => {
-
   const canVerify = idSubmitted;
 
   return (
@@ -23,9 +22,22 @@ const UserDetails = ({
       <div className="flex flex-col gap-3 mb-4">
 
         {/* Image 1 */}
-        <div className="w-full h-32 rounded-xl overflow-hidden border border-amber-400/30 bg-black/50 flex items-center justify-center">
+        <div className="relative group w-full h-32 rounded-xl overflow-hidden border border-amber-400/30 bg-black/50 flex items-center justify-center">
           {image ? (
-            <img src={image} className="w-full h-full object-cover" />
+            <>
+              <img
+                src={image}
+                className="w-full h-full object-cover transition duration-300 group-hover:scale-105"
+              />
+
+              {/* POP OUT PREVIEW */}
+              <div className="absolute hidden group-hover:flex items-center justify-center z-50">
+                <img
+                  src={image}
+                  className="absolute top-[-20px] left-1/2 -translate-x-1/2 w-[260px] h-[180px] object-cover rounded-xl border border-amber-400 shadow-2xl"
+                />
+              </div>
+            </>
           ) : (
             <div className="text-gray-400 text-xs flex flex-col items-center">
               <FaImage className="text-2xl mb-1" />
@@ -35,9 +47,22 @@ const UserDetails = ({
         </div>
 
         {/* Image 2 */}
-        <div className="w-full h-32 rounded-xl overflow-hidden border border-amber-400/30 bg-black/50 flex items-center justify-center">
+        <div className="relative group w-full h-32 rounded-xl overflow-hidden border border-amber-400/30 bg-black/50 flex items-center justify-center">
           {secondImage ? (
-            <img src={secondImage} className="w-full h-full object-cover" />
+            <>
+              <img
+                src={secondImage}
+                className="w-full h-full object-cover transition duration-300 group-hover:scale-105"
+              />
+
+              {/* POP OUT PREVIEW */}
+              <div className="absolute hidden group-hover:flex items-center justify-center z-50">
+                <img
+                  src={secondImage}
+                  className="absolute top-[-20px] left-1/2 -translate-x-1/2 w-[260px] h-[180px] object-cover rounded-xl border border-amber-400 shadow-2xl"
+                />
+              </div>
+            </>
           ) : (
             <div className="text-gray-400 text-xs flex flex-col items-center">
               <FaImage className="text-2xl mb-1" />

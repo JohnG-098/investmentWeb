@@ -58,11 +58,30 @@ const DropDown = ({ open, setMenuOpen }) => {
       ${open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10 pointer-events-none"}`}
     >
       <div className="flex flex-col gap-4">
-        <Link onClick={close} to="/">Home</Link>
-        <Link onClick={close} to="/about">About Us</Link>
-        <Link onClick={close} to="/blog">Blog</Link>
-        <Link onClick={close} to="/plan">Plan</Link>
-        <Link onClick={close} to="/contact">Contact Us</Link>
+        {user?.role === "admin" && (
+          <Link
+            onClick={close}
+            to="/admin"
+            className="px-3 py-2 rounded-md bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 hover:text-blue-400 transition font-medium text-center"
+          >
+            🛡️ Admin Panel
+          </Link>
+        )}
+        <Link onClick={close} to="/">
+          Home
+        </Link>
+        <Link onClick={close} to="/about">
+          About Us
+        </Link>
+        <Link onClick={close} to="/blog">
+          Blog
+        </Link>
+        <Link onClick={close} to="/plan">
+          Plan
+        </Link>
+        <Link onClick={close} to="/contact">
+          Contact Us
+        </Link>
 
         <div className="border-t border-amber-500/20 my-2" />
 
@@ -79,10 +98,7 @@ const DropDown = ({ open, setMenuOpen }) => {
         )}
 
         {user ? (
-          <div
-            onClick={handleLogout}
-            className="text-red-400 cursor-pointer"
-          >
+          <div onClick={handleLogout} className="text-red-400 cursor-pointer">
             Logout
           </div>
         ) : (

@@ -4,9 +4,9 @@ const About = () => {
   return (
     <section
       className="
-      bg-[linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)),url('/src/assets/img2.png')]
+      bg-[linear-gradient(rgba(0,0,0,0.0),rgba(0,0,0,0.6)),url('/src/assets/aboutBg.png')]
       bg-cover bg-center
-      text-amber-200
+      text-amber-50
       min-h-screen
       flex items-center
       px-6 md:px-16 lg:px-24

@@ -1,55 +1,82 @@
-// Remove this line entirely
-// const backendDomain = "https://backend-theta-six-55.vercel.app"
+
+
+//const backendDomain = "http://localhost:8080" //"http://localhost:8080";//https://backend-theta-six-55.vercel.app
 
 const SummaryApi = {
   SignUp: {
-    url: `/api/user/add`,
+    url: `${backendDomain}/api/user/add`,
     method: "post",
   },
   signIn: {
-    url: `/api/user/login`,
+    url: `${backendDomain}/api/user/login`,
     method: "post",
   },
-  current_user: {
-    url: `/api/user/details`,
-    method: "get",
-  },
+  current_user : {
+        url : `${backendDomain}/api/user/details`,
+        method : "get"
+    },
   Invest: {
-    url: `/api/user/invest`,
+    url: `${backendDomain}/api/user/invest`,
     method: "post",
   },
   verifyEmail: {
-    url: `/api/user/verify`,
+    url: `${backendDomain}/api/user/verify`,
     method: "post",
   },
   verifyCode: {
-    url: `/api/user/verify-code`,
+    url: `${backendDomain}/api/user/verify-code`,
     method: "post",
   },
   fetchInvestment: {
-    url: `/api/user/investments`,
+    url: `${backendDomain}/api/user/investments`,
     method: "post",
   },
   investMore: {
-    url: `/api/user/invest-more`,
+    url: `${backendDomain}/api/user/invest-more`,
     method: "post",
   },
   getTransactions: {
-    url: `/api/user/transactions`,
+    url: `${backendDomain}/api/user/transactions`,
     method: "post",
   },
   getAllUsers: {
-    url: `/api/user/all-users`,
+    url: `${backendDomain}/api/admin/all-users`,
     method: "get",
   },
   verifyKyc: {
-    url: `/api/user/verify-kyc`,
+    url: `${backendDomain}/api/admin/verify-kyc`,
     method: "post",
   },
   logout: {
-    url: `/api/user/logout`,
+    url: `${backendDomain}/api/user/logout`,
     method: "post",
   },
+  uploadId: {
+    url: `${backendDomain}/api/user/upload-id`,
+    method: "post",
+  },
+  getAllTransactions: {
+    url: `${backendDomain}/api/admin/all-transactions`,
+    method: "post",
+  },
+  verifyTransaction: {
+    url: `${backendDomain}/api/admin/verify-transaction`,
+    method: "post",
+  },
+  fetchUsers: {
+    url: `${backendDomain}/api/admin/fetch-users`,
+    method: "post",
+  },
+  changeRole: {
+    url: `${backendDomain}/api/admin/change-role`,
+    method: "post",
+  },
+  calculator: { //Not utilised, login user and send { email, userId } to the body
+    url: `${backendDomain}/api/user/amount-details`,
+    method: "post",
+  },
+
+
 };
 
 export default SummaryApi;

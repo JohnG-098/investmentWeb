@@ -2,10 +2,10 @@ import React from "react";
 import Card from "./Card";
 
 const InvestPlan = () => {
-  return (
+  return ( //bg-[linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('/src/assets/galaxy.png')]
     <section
       className="
-      bg-[linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('/src/assets/galaxy.png')]
+      bg-black
       bg-cover bg-center
       text-amber-200
       py-24

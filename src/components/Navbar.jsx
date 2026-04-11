@@ -3,10 +3,12 @@ import DropDown from "./DropDown";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { BiLogoMediumOld } from "react-icons/bi";
-import { FaWallet } from "react-icons/fa";
+import { FaWallet, FaUserShield } from "react-icons/fa"; // ✅ added icon
 import Context from "../context";
 import SummaryApi from "../common";
 import { toast } from "react-hot-toast";
+import logo from "../assets/svg/logo.svg";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -15,7 +17,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ✅ keep only user (setUser NOT required anymore for sync safety)
   const { user, setUser, fetchUserDetails } = useContext(Context);
 
   useEffect(() => {
@@ -29,9 +30,6 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  // =========================
-  // ✅ FIXED LOGOUT
-  // =========================
   const handleLogout = async () => {
     try {
       const response = await fetch(SummaryApi.logout.url, {
@@ -43,11 +41,8 @@ const Navbar = () => {
 
       if (data.success) {
         toast.success("Logged out successfully");
-
-        // ✅ instantly clear UI
         setUser(null);
 
-        // optional: re-sync backend state
         if (fetchUserDetails) {
           await fetchUserDetails();
         }
@@ -69,10 +64,10 @@ const Navbar = () => {
     >
       {/* Logo */}
       <div
-        className="font-bold text-6xl cursor-pointer flex flex-row"
+        className="font-bold text-6xl -mx-12 cursor-pointer flex flex-row"
         onClick={() => navigate("/")}
       >
-        <BiLogoMediumOld />
+        <Logo />
       </div>
 
       {/* Right Side */}
@@ -80,58 +75,33 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex flex-row gap-8 items-center">
-          <Link
-            to="/"
-            className={`px-3 py-1 rounded-md transition ${
-              isActive("/")
-                ? "bg-amber-500/20 text-amber-300"
-                : "hover:text-amber-400"
-            }`}
-          >
+          <Link to="/" className={`px-3 py-1 rounded-md transition ${
+              isActive("/") ? "bg-amber-500/20 text-amber-300" : "hover:text-amber-400"
+            }`}>
             Home
           </Link>
 
-          <Link
-            to="/about"
-            className={`px-3 py-1 rounded-md transition ${
-              isActive("/about")
-                ? "bg-amber-500/20 text-amber-300"
-                : "hover:text-amber-400"
-            }`}
-          >
+          <Link to="/about" className={`px-3 py-1 rounded-md transition ${
+              isActive("/about") ? "bg-amber-500/20 text-amber-300" : "hover:text-amber-400"
+            }`}>
             About Us
           </Link>
 
-          <Link
-            to="/blog"
-            className={`px-3 py-1 rounded-md transition ${
-              isActive("/blog")
-                ? "bg-amber-500/20 text-amber-300"
-                : "hover:text-amber-400"
-            }`}
-          >
+          <Link to="/blog" className={`px-3 py-1 rounded-md transition ${
+              isActive("/blog") ? "bg-amber-500/20 text-amber-300" : "hover:text-amber-400"
+            }`}>
             Blog
           </Link>
 
-          <Link
-            to="/plan"
-            className={`px-3 py-1 rounded-md transition ${
-              isActive("/plan")
-                ? "bg-amber-500/20 text-amber-300"
-                : "hover:text-amber-400"
-            }`}
-          >
+          <Link to="/plan" className={`px-3 py-1 rounded-md transition ${
+              isActive("/plan") ? "bg-amber-500/20 text-amber-300" : "hover:text-amber-400"
+            }`}>
             Plan
           </Link>
 
-          <Link
-            to="/contact"
-            className={`px-3 py-1 rounded-md transition ${
-              isActive("/contact")
-                ? "bg-amber-500/20 text-amber-300"
-                : "hover:text-amber-400"
-            }`}
-          >
+          <Link to="/contact" className={`px-3 py-1 rounded-md transition ${
+              isActive("/contact") ? "bg-amber-500/20 text-amber-300" : "hover:text-amber-400"
+            }`}>
             Contact Us
           </Link>
 
@@ -147,6 +117,22 @@ const Navbar = () => {
               }`}
             >
               <FaWallet className="text-lg" />
+            </div>
+          )}
+
+          {/* 🛡️ ADMIN ICON (NEW) */}
+          {user?.role === "admin" && (
+            <div
+              onClick={() => navigate("/admin")}
+              title="Admin Panel"
+              className={`flex items-center justify-center w-9 h-9 rounded-md transition cursor-pointer
+              ${
+                isActive("/admin")
+                  ? "bg-blue-500/20 text-blue-300 shadow-[0_0_10px_rgba(59,130,246,0.5)]"
+                  : "hover:text-blue-400"
+              }`}
+            >
+              <FaUserShield className="text-lg" />
             </div>
           )}
 
@@ -177,7 +163,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Dropdown */}
       <DropDown open={menuOpen} setMenuOpen={setMenuOpen} />
     </div>
   );

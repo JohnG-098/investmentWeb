@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import Context from "../context";
 import { useNavigate } from "react-router-dom";
 import SummaryApi from "../common";
-import { FaCircle } from "react-icons/fa";
+import { FaCircle, FaCheckCircle } from "react-icons/fa";
+import VerifiedBadge from "../components/VerifiedBadge";
 
 const Dashboard = () => {
   const { user, fetchUserDetails } = useContext(Context);
@@ -78,13 +79,25 @@ const Dashboard = () => {
     (acc, item) => acc + (item.amountInvested || 0),
     0
   );
+
   const totalProfit = investments.reduce(
     (acc, item) =>
-      acc + ((item.updatedAmount ?? item.amountInvested ?? 0) - (item.amountInvested ?? 0)),
+      acc +
+      ((item.updatedAmount ?? item.amountInvested ?? 0) -
+        (item.amountInvested ?? 0)),
     0
   );
+
   const walletBalance = totalInvested + totalProfit;
-  const activeInvestment = investments.length > 0 ? investments[investments.length - 1] : null;
+
+  const activeInvestment =
+    investments.length > 0 ? investments[investments.length - 1] : null;
+
+  // ✅ FIX: derive KYC directly (NO useState)
+  const idVerified = user?.idVerified || false;
+  const idUrl = user?.idUrl || null;
+
+  console.log("User details:", user);
 
   return (
     <div className="min-h-screen bg-black text-amber-200 px-4 md:px-10 py-24 relative">
@@ -92,8 +105,19 @@ const Dashboard = () => {
       <div className="mb-10 relative flex items-center justify-between">
         <div>
           <h1 className="text-3xl md:text-4xl font-bold">My Wallet</h1>
-          <p className="text-gray-400 mt-2 flex items-center gap-3">
-            {user ? `Hello ${user.firstName} 👋` : "Loading user..."}
+
+          <p className="text-gray-400 mt-2 flex items-center gap-3 flex-wrap">
+            {user ? (
+              <>
+                {user.firstName}
+                {/* ✅ VERIFIED BADGE */}
+                {idVerified && (
+                  <VerifiedBadge/>
+                )}
+              </>
+            ) : (
+              "Loading user..."
+            )}
 
             {/* Yellow blinking pending transaction badge */}
             {hasPendingTransaction && (
@@ -104,14 +128,26 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Green glowing circle at top-right */}
-        <FaCircle className="text-green-400 w-2 h-2 animate-ping absolute top-0 right-0 mt-1 mr-1" />
+        {/* Right side indicators */}
+        <div className="flex items-center gap-3">
+          {/* ✅ ID Pending (only when uploaded but not verified) */}
+          {idUrl && !idVerified && (
+            <p className="text-[11px] px-2 py-1 rounded-md bg-yellow-500/10 border border-yellow-400/30 text-yellow-300 animate-pulse">
+              ID verification pending
+            </p>
+          )}
+
+          {/* Green glowing circle */}
+          <FaCircle className="text-green-400 w-2 h-2 animate-ping" />
+        </div>
       </div>
 
       {/* Wallet Section */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-10">
         <div
-          className={`bg-gradient-to-br from-gray-900 to-black rounded-2xl p-4 md:p-6 shadow-lg border border-amber-500/20 transition duration-300 ${loading ? "animate-pulse" : ""}`}
+          className={`bg-gradient-to-br from-gray-900 to-black rounded-2xl p-4 md:p-6 shadow-lg border border-amber-500/20 transition duration-300 ${
+            loading ? "animate-pulse" : ""
+          }`}
         >
           <p className="text-gray-400 text-sm">Wallet Balance</p>
           <h2 className="text-xl md:text-3xl font-bold mt-2 text-amber-400">
@@ -120,7 +156,9 @@ const Dashboard = () => {
         </div>
 
         <div
-          className={`bg-gradient-to-br from-gray-900 to-black rounded-2xl p-4 md:p-6 shadow-lg border border-amber-500/20 transition duration-300 ${loading ? "animate-pulse" : ""}`}
+          className={`bg-gradient-to-br from-gray-900 to-black rounded-2xl p-4 md:p-6 shadow-lg border border-amber-500/20 transition duration-300 ${
+            loading ? "animate-pulse" : ""
+          }`}
         >
           <p className="text-gray-400 text-sm">Total Invested</p>
           <h2 className="text-xl md:text-3xl font-bold mt-2 text-amber-300">
@@ -129,7 +167,9 @@ const Dashboard = () => {
         </div>
 
         <div
-          className={`col-span-2 md:col-span-1 bg-gradient-to-br from-gray-900 to-black rounded-2xl p-4 md:p-6 shadow-lg border border-green-500/20 transition duration-300 ${loading ? "animate-pulse" : ""}`}
+          className={`col-span-2 md:col-span-1 bg-gradient-to-br from-gray-900 to-black rounded-2xl p-4 md:p-6 shadow-lg border border-green-500/20 transition duration-300 ${
+            loading ? "animate-pulse" : ""
+          }`}
         >
           <p className="text-gray-400 text-sm">Total Profit</p>
           <h2 className="text-xl md:text-3xl font-bold mt-2 text-green-400">
@@ -140,7 +180,9 @@ const Dashboard = () => {
 
       {/* Active Plan */}
       <div
-        className={`bg-gradient-to-br from-gray-900 to-black rounded-2xl p-5 md:p-6 shadow-lg border border-amber-500/20 mb-10 ${loading ? "animate-pulse" : ""}`}
+        className={`bg-gradient-to-br from-gray-900 to-black rounded-2xl p-5 md:p-6 shadow-lg border border-amber-500/20 mb-10 ${
+          loading ? "animate-pulse" : ""
+        }`}
       >
         <h2 className="text-xl md:text-2xl font-bold mb-4">
           Active Investment Plan
@@ -181,7 +223,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
         <button
           className="bg-amber-500 hover:bg-amber-600 text-black font-semibold py-3 rounded-xl transition shadow-md cursor-pointer"
-          onClick={() => navigate("/plan")}//onClick={() => navigate("/invest-more")}  Invest More
+          onClick={() => navigate("/plan")}
         >
           Invest
         </button>
@@ -189,14 +231,17 @@ const Dashboard = () => {
         <button className="bg-gray-800 hover:bg-gray-700 border border-amber-500/20 py-3 rounded-xl transition cursor-pointer">
           Withdraw
         </button>
-
-        {/* <button
-          className="bg-gray-800 hover:bg-gray-700 border border-amber-500/20 py-3 rounded-xl transition cursor-pointer"
-          onClick={() => navigate("/change-plan")}
-        >
-          Change Plan
-        </button> */}
       </div>
+
+      {/* ✅ Upload Button ONLY when idUrl is null */}
+      {!idUrl && (
+        <button
+          onClick={() => navigate("/upload-id")}
+          className="fixed bottom-6 right-6 bg-amber-400 text-black px-5 py-3 rounded-full shadow-lg hover:bg-amber-500 transition cursor-pointer"
+        >
+          Please Verify KYC
+        </button>
+      )}
 
       {/* Recent Activity */}
       <div className="mt-12">
@@ -223,13 +268,13 @@ const Dashboard = () => {
                   {item.name || "Investment"} +{" "}
                   <span
                     className={`capitalize px-3 py-1 rounded-full text-xs font-semibold tracking-wide
-    ${
-      item.status === "active"
-        ? "text-green-300 bg-green-500/10 border border-green-400/30 shadow-[0_0_10px_rgba(34,197,94,0.6)]"
-        : item.status === "pending"
-          ? "text-yellow-300 bg-yellow-500/10 border border-yellow-400/30 shadow-[0_0_10px_rgba(234,179,8,0.6)]"
-          : "text-green-300 bg-red-500/10 border border-green-400/30 shadow-[0_0_12px_rgba(34,197,94,0.7)]"
-    }`}
+                    ${
+                      item.status === "active"
+                        ? "text-green-300 bg-green-500/10 border border-green-400/30 shadow-[0_0_10px_rgba(34,197,94,0.6)]"
+                        : item.status === "pending"
+                          ? "text-yellow-300 bg-yellow-500/10 border border-yellow-400/30 shadow-[0_0_10px_rgba(234,179,8,0.6)]"
+                          : "text-green-300 bg-red-500/10 border border-green-400/30 shadow-[0_0_12px_rgba(34,197,94,0.7)]"
+                    }`}
                   >
                     {item.status}
                   </span>

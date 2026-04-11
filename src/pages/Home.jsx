@@ -4,6 +4,8 @@ import About from '../components/About'
 import MainLayout from '../layouts/MainLayout'
 import InvestPlan from '../components/InvestPlan'
 import WhyUs from '../components/WhyUs'
+import WhatUserSay from './WhatUserSay'
+import TopInvestors from './TopInvestors'
 
 const Home = () => {
   return (
@@ -12,6 +14,8 @@ const Home = () => {
       <About/>
       <InvestPlan/>
       <WhyUs/>
+      <WhatUserSay/>
+      <TopInvestors/>
     </>
   )
 }

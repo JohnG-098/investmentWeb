@@ -7,10 +7,10 @@ const Hero = () => {
 
   return (
     <div
-      className="bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('/src/assets/img1.png')]
-      bg-cover bg-center min-h-180 text-amber-200
+      className="bg-[linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.0)),url('/src/assets/homeBg.png')]
+      bg-cover bg-center min-h-180 text-amber-50
       flex items-center justify-center md:justify-end
-      px-6 md:pr-16 pt-8"
+      px-6 md:pr-16 pt-8 font-['Merriweather']"
     >
       <div className="max-w-2xl text-center md:text-right">
         <div className="text-base sm:text-lg md:text-2xl leading-relaxed">

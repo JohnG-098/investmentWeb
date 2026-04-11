@@ -5,14 +5,16 @@ import SummaryApi from "../common";
 const Context = createContext(null);
 
 export const ContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined); // 🔥 undefined = loading
   const [loading, setLoading] = useState(true);
 
-  // ✅ prevents navbar flicker before auth loads
+  // ✅ tells app auth check is complete
   const [authReady, setAuthReady] = useState(false);
 
   const fetchUserDetails = async () => {
     try {
+      console.log("Fetching user...");
+
       const res = await fetch(SummaryApi.current_user.url, {
         method: SummaryApi.current_user.method,
         credentials: "include",
@@ -20,20 +22,23 @@ export const ContextProvider = ({ children }) => {
 
       const data = await res.json();
 
-      if (data.success) {
-        setUser(data.data);
+      if (res.ok && data.success) {
+        console.log("User fetched:", data.data);
+        setUser(data.data); // ✅ logged in
       } else {
-        setUser(null);
+        console.log("Not authenticated");
+        setUser(null); // ❌ not logged in
       }
     } catch (err) {
       console.log("Error fetching user:", err);
       setUser(null);
     } finally {
       setLoading(false);
-      setAuthReady(true);
+      setAuthReady(true); // 🔥 important
     }
   };
 
+  // ✅ run ONLY once
   useEffect(() => {
     fetchUserDetails();
   }, []);

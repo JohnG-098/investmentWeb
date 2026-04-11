@@ -85,24 +85,38 @@ const Restrict = () => {
         </div>
       ) : (
         <div className="flex flex-wrap justify-center gap-8">
-          {users.map((user) => (
-            <UserDetails
-              key={user._id}
-              userId={user._id}
-              firstName={user.firstName}
-              amount={user.Amount}
-              lastName={user.lastName}
-              email={user.email}
-              country={user.country || "N/A"}
-              idSubmitted={user.idSubmitted}
-              verified={user.idVerified}
-              image={user.idUrl}
-              secondImage={user.secondIdUrl} // optional
-              onVerify={() =>
-                handleVerify(user._id, user.email, user.firstName)
-              }
-            />
-          ))}
+          {users.map((user) => {
+
+            // ✅ FIX: parse idUrl safely
+            let parsedImages = {};
+            try {
+              parsedImages = user.idUrl ? JSON.parse(user.idUrl) : {};
+            } catch (err) {
+              parsedImages = {};
+            }
+
+            return (
+              <UserDetails
+                key={user._id}
+                userId={user._id}
+                firstName={user.firstName}
+                amount={user.Amount}
+                lastName={user.lastName}
+                email={user.email}
+                country={user.country || "N/A"}
+                idSubmitted={user.idSubmitted}
+                verified={user.idVerified}
+
+                // ✅ FIXED IMAGE PASSING
+                image={parsedImages.front}
+                secondImage={parsedImages.back}
+
+                onVerify={() =>
+                  handleVerify(user._id, user.email, user.firstName)
+                }
+              />
+            );
+          })}
         </div>
       )}
     </div>
